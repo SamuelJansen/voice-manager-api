@@ -1,2 +1,2 @@
-python-framework<=0.2.1
-selenium==3.141.0
+python-framework<=0.2.41
+pygame==2.0.1
