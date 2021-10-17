@@ -3,8 +3,15 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+local-config.yml
+*.db
+*.png
+*.mp3
+*.wav
+
 # C extensions
 *.so
+
 
 # Distribution / packaging
 .Python

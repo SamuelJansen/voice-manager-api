@@ -1,0 +1,202 @@
+{
+    "swagger": "2.0",
+    "paths": {
+        "/speech": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "body",
+                        "type": "object",
+                        "in": "body",
+                        "required": true,
+                        "description": null,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/definitions/SpeakRequestDto"
+                            }
+                        }
+                    }
+                ],
+                "tags": [
+                    "Speech"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/definitions/SpeakResponseDto"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/actuator/health": {
+            "get": {
+                "parameters": [],
+                "tags": [
+                    "HealthCheck"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ActuatorHealthResponseDto"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "SpeakRequestDto": {
+            "type": "object",
+            "properties": {
+                "extension": {
+                    "type": null,
+                    "example": null
+                },
+                "muted": {
+                    "type": null,
+                    "example": null
+                },
+                "name": {
+                    "type": null,
+                    "example": null
+                },
+                "path": {
+                    "type": null,
+                    "example": null
+                },
+                "text": {
+                    "type": null,
+                    "example": null
+                },
+                "voice": {
+                    "type": null,
+                    "example": null
+                }
+            },
+            "required": [
+                "extension",
+                "muted",
+                "name",
+                "path",
+                "text",
+                "voice"
+            ]
+        },
+        "SpeakResponseDto": {
+            "type": "object",
+            "properties": {
+                "duration": {
+                    "type": null,
+                    "example": null
+                },
+                "extension": {
+                    "type": null,
+                    "example": null
+                },
+                "key": {
+                    "type": null,
+                    "example": null
+                },
+                "name": {
+                    "type": null,
+                    "example": null
+                },
+                "path": {
+                    "type": null,
+                    "example": null
+                },
+                "staticFileCreatedAt": {
+                    "type": null,
+                    "example": null
+                },
+                "staticUrl": {
+                    "type": null,
+                    "example": null
+                },
+                "text": {
+                    "type": null,
+                    "example": null
+                },
+                "voice": {
+                    "type": null,
+                    "example": null
+                }
+            },
+            "required": [
+                "duration",
+                "extension",
+                "key",
+                "name",
+                "path",
+                "staticFileCreatedAt",
+                "staticUrl",
+                "text",
+                "voice"
+            ]
+        },
+        "ActuatorHealthResponseDto": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "object",
+                    "example": null
+                }
+            },
+            "required": [
+                "status"
+            ]
+        }
+    },
+    "tags": [
+        {
+            "name": "Speech",
+            "description": "Speech controller",
+            "externalDocs": null
+        },
+        {
+            "name": "HealthCheck",
+            "description": "HealthCheck controller",
+            "externalDocs": null
+        }
+    ],
+    "host": "192.168.25.2:5050",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/ai-voice-api",
+    "info": {
+        "title": {},
+        "description": "Ai Voice Api",
+        "version": "0.0.1",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Samuel Jansen",
+            "email": "samuel.jansenn@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0 / MIT License",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    }
+}

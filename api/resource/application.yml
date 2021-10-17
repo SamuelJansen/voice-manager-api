@@ -1,0 +1,42 @@
+print-status: False
+api:
+    name: AiVoiceApi
+    extension: yml
+    dependency:
+        update: False
+        list:
+            web: [Popen,Path]
+            local: []
+    list: [globals]
+    language: EN-US
+    git:
+        url: https://github.com/SamuelJansen/
+        extension: git
+
+    security:
+        secret: ${SECURITY_KEY:default}
+    server:
+        scheme: http
+        host: 0.0.0.0
+        port: 5050
+        base-url: /ai-voice-api
+    scheduler:
+        enable: ${SCHEDULER_API_ENABLE:True}
+
+swagger:
+    host: 192.168.25.3:${api.server.port}
+    schemes: [${api.server.scheme}]
+    info:
+        title: {api.name}
+        version: 0.0.1
+        description: Ai Voice Api
+        terms-of-service: http://swagger.io/terms/
+        contact:
+            name: Samuel Jansen
+            email: samuel.jansenn@gmail.com
+        license:
+            name: Apache 2.0 / MIT License
+            url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+python:
+    version: 3.9
