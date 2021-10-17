@@ -7,4 +7,4 @@ api:
             check_same_thread: False
 
 swagger:
-    host: 192.168.25.2:${api.server.port}
+    host: 192.168.25.3:${api.server.port}
