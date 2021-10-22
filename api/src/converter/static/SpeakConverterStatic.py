@@ -16,7 +16,7 @@ def getValidName(originalName) :
 
 def toRequestDto(dto) :
     dto.extension = ConverterStatic.getValueOrDefault(dto.extension, 'mp3')
-    dto.path = ConverterStatic.getValueOrDefault(dto.path, SpeechConfig.SPEECH_STATIC_FILE_PATH)
+    dto.path = ConverterStatic.getValueOrDefault(dto.path, SpeechConfig.PLAY_HT_STATIC_FILE_PATH)
     if ObjectHelper.isNone(dto.name) and ObjectHelper.isNotNone(dto.text) :
         dto.name = getValidName(dto.text.lower())
     dto.voice = getVoiceOrDefault(dto.voice)

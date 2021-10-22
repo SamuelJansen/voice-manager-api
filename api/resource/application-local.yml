@@ -1,7 +1,13 @@
 print-status: False
 
 api:
+    server:
+        scheme: http
+        port: 5050
     database:
         dialect: ${DATABASE_DIALECT:sqlite}
         settings:
             check_same_thread: False
+
+swagger:
+    host: ${SWAGGER_HOST:}:${api.server.port}

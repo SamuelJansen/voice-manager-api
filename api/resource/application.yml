@@ -16,7 +16,7 @@ api:
     security:
         secret: ${SECURITY_KEY:default}
     server:
-        scheme: http
+        scheme: https
         host: 0.0.0.0
         port: 5050
         base-url: /ai-voice-api
@@ -24,7 +24,7 @@ api:
         enable: ${SCHEDULER_API_ENABLE:True}
 
 swagger:
-    host: 192.168.25.3:${api.server.port}
+    host: ${SWAGGER_HOST:}:${api.server.port}
     schemes: [${api.server.scheme}]
     info:
         title: {api.name}
@@ -39,4 +39,4 @@ swagger:
             url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 python:
-    version: 3.9 
+    version: 3.9

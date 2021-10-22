@@ -54,7 +54,7 @@ class SpeakService :
     @ServiceMethod()
     def getSpeechCacheList(self) :
         return EnvironmentHelper.listDirectoryContent(
-            SpeechConfig.SPEECH_STATIC_FILE_PATH
+            SpeechConfig.PLAY_HT_STATIC_FILE_PATH
         )
 
     @ServiceMethod(requestClass=[str])

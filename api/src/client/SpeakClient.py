@@ -77,7 +77,7 @@ class SpeakClient :
     def speak(self, dto):
         try :
             requestBody = {
-                "userId": SpeechClientConfig.USER_ID,
+                "userId": SpeechClientConfig.PLAY_HT_USER_ID,
                 "ssml": f"<speak><p>{dto.text}</p></speak>",
                 "voice": dto.voice,
                 "narrationStyle": "regular",
@@ -89,11 +89,11 @@ class SpeakClient :
             }
             duration = len(dto.text.split()) * 0.058 + 1.54525318
             duration *= (1 + duration/30 - duration/300)
-            response = requests.post(f'{SpeechClientConfig.SPEECH_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody)
+            response = requests.post(f'{SpeechClientConfig.PLAY_HT_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody)
             try :
                 responseBody = response.json()
                 # requestBody['method'] = "binary"
-                # duration = float(requests.post(f'{SpeechClientConfig.SPEECH_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody).headers.get('Content-Length'))/6176.8125
+                # duration = float(requests.post(f'{SpeechClientConfig.PLAY_HT_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody).headers.get('Content-Length'))/6176.8125
             except Exception as exception :
                 # log.prettyPython(self.speak, 'response error', ReflectionHelper.getItNaked(response), logLevel=log.DEBUG)
                 log.failure(self.speak, f'Not possible to parse response as json. Original response as text: {response.text}. Response status code: {response.status_code}. Text request: {dto.text}', exception)
