@@ -8,16 +8,16 @@ from python_framework import SimpleClient, SimpleClientMethod
 
 import Speak
 
-from domain import SpeechConstants
+from constant import SpeechConstant
 from util import SoundUtil
 from config import SpeechClientConfig
 from dto import SpeakDto
 from converter.static import SpeakConverterStatic
 
-DEFAULT_SPEAKING_MESSAGE_DTO = SpeakDto.SpeakRequestDto(text=SpeechConstants.DEFAULT_VOICE_SERVICE_IS_OFFLINE_MESSAGE)
+DEFAULT_SPEAKING_MESSAGE_DTO = SpeakDto.SpeakRequestDto(text=SpeechConstant.DEFAULT_VOICE_SERVICE_IS_OFFLINE_MESSAGE)
 DEFAULT_SPEAKING_MESSAGE = Speak.Speak(
     text=DEFAULT_SPEAKING_MESSAGE_DTO.text,
-    voice=SpeechConstants.DEFAULT_VOICE,
+    voice=SpeechConstant.DEFAULT_VOICE,
     name=DEFAULT_SPEAKING_MESSAGE_DTO.name,
     extension=DEFAULT_SPEAKING_MESSAGE_DTO.extension,
     path=DEFAULT_SPEAKING_MESSAGE_DTO.path,

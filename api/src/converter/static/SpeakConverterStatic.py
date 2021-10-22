@@ -3,7 +3,7 @@ from python_helper import ObjectHelper, StringHelper, EnvironmentHelper
 from python_framework import ConverterStatic
 
 from config import SpeechConfig
-from domain import SpeechConstants
+from constant import SpeechConstant
 
 def fullAudioPathAndNameAndExtension(audioData) :
     path = f'{audioData.path}' if ObjectHelper.isNotNone(audioData.path) and StringHelper.isNotBlank(audioData.path) else c.BLANK
@@ -12,7 +12,7 @@ def fullAudioPathAndNameAndExtension(audioData) :
 
 def getValidName(originalName) :
     if ObjectHelper.isNotNone(originalName) :
-        return StringHelper.join([character for character in originalName if character in SpeechConstants.VALID_CHARACTER_SET], character=c.BLANK)
+        return StringHelper.join([character for character in originalName if character in SpeechConstant.VALID_CHARACTER_SET], character=c.BLANK)
 
 def toRequestDto(dto) :
     dto.extension = ConverterStatic.getValueOrDefault(dto.extension, 'mp3')
@@ -22,4 +22,4 @@ def toRequestDto(dto) :
     dto.voice = getVoiceOrDefault(dto.voice)
 
 def getVoiceOrDefault(givenVoice: str):
-    return ConverterStatic.getValueOrDefault(givenVoice, SpeechConstants.DEFAULT_VOICE)
+    return ConverterStatic.getValueOrDefault(givenVoice, SpeechConstant.DEFAULT_VOICE)
