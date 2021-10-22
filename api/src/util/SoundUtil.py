@@ -1,15 +1,6 @@
+import time
 from pygame import mixer
-import time, winsound
 from python_helper import log
-
-def beepAndSleep(beep=1, wait=0) :
-    frequency = 2500  # Set Frequency To 2500 Hertz
-    duration = 50  # Set Duration To 1000 ms == 1 second
-    interval = 50
-    for _ in range(beep):
-        winsound.Beep(frequency, duration)
-        time.sleep(interval/1000)
-    time.sleep(wait)
 
 def initializeIfNeeded():
     if not mixer.get_init():
