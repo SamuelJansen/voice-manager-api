@@ -24,8 +24,8 @@ api:
         enable: ${SCHEDULER_API_ENABLE:True}
 
 swagger:
-    host: ${SWAGGER_HOST:${api.server.host}}:${api.server.port}
     schemes: [${api.server.scheme}]
+    host: ${SWAGGER_HOST:${api.server.host}}:${api.server.port}
     info:
         title: {api.name}
         version: 0.0.1
