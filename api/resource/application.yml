@@ -16,7 +16,7 @@ api:
     security:
         secret: ${SECURITY_KEY:default}
     server:
-        scheme: https
+        scheme: http
         host: 0.0.0.0
         port: 5050
         base-url: /ai-voice-api
@@ -24,7 +24,7 @@ api:
         enable: ${SCHEDULER_API_ENABLE:True}
 
 swagger:
-    host: ${SWAGGER_HOST:}:${api.server.port}
+    host: ${SWAGGER_HOST:${api.server.host}}:${api.server.port}
     schemes: [${api.server.scheme}]
     info:
         title: {api.name}
