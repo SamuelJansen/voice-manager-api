@@ -21,7 +21,7 @@ api:
         port: 5050
         base-url: /ai-voice-api
     scheduler:
-        enable: ${SCHEDULER_API_ENABLE:True}
+        enable: ${ENABLE_SCHEDULER_API:True}
 
 swagger:
     # schemes: [${api.server.scheme}] ###- bug
