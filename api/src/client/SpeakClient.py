@@ -160,4 +160,9 @@ class SpeakClient :
 
     @SimpleClientMethod()
     def playBuffer(self):
-        self.soundHandler.playBuffer()
+        results = None
+        try:
+            results = self.soundHandler.playBuffer()
+        except Exception as exception:
+            log.failure(self.playBuffer, 'not possible to play buffer', exception=exception, muteStackTrace=True)
+        return results

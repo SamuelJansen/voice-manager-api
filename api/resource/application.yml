@@ -27,7 +27,7 @@ swagger:
     # schemes: [${api.server.scheme}] ###- bug
     # host: ${SWAGGER_HOST:${api.server.host}}:${api.server.port} ###- bug
     info:
-        title: {api.name}
+        title: ${api.name}
         version: 0.0.1
         description: Ai Voice Api
         terms-of-service: http://swagger.io/terms/
