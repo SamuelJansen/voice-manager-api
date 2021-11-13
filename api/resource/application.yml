@@ -13,8 +13,12 @@ api:
         url: https://github.com/SamuelJansen/
         extension: git
 
+    session:
+        secret: ${SESSION_SECRET:default}
+    api-key:
+        secret: ${API_KEY_SECRET:default}
     security:
-        secret: ${SECURITY_KEY:default}
+        secret: ${SECURITY_SECRET:default}
     server:
         scheme: http
         host: 0.0.0.0

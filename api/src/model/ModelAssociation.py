@@ -1,5 +1,8 @@
 from python_framework import FrameworkModel
 
-SPEAK = 'Speak'
 
 MODEL = FrameworkModel.getModel()
+
+
+SPEAK = 'Speak'
+SAMPLE_SPEAK = 'SampleSpeak'

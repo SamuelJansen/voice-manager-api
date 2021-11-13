@@ -89,6 +89,7 @@ class SpeakClient :
             }
             duration = len(dto.text.split()) * 0.058 + 1.54525318
             duration *= (1 + duration/30 - duration/300)
+            log.prettyPython(self.speak, 'Voice request', requestBody, logLevel=log.INFO)
             response = requests.post(f'{SpeechClientConfig.PLAY_HT_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody)
             try :
                 responseBody = response.json()
@@ -96,11 +97,11 @@ class SpeakClient :
                 # duration = float(requests.post(f'{SpeechClientConfig.PLAY_HT_BASE_URL}/transcribe', headers=DEFAULT_HEADERS, json=requestBody).headers.get('Content-Length'))/6176.8125
             except Exception as exception :
                 # log.prettyPython(self.speak, 'response error', ReflectionHelper.getItNaked(response), logLevel=log.DEBUG)
-                log.failure(self.speak, f'Not possible to parse response as json. Original response as text: {response.text}. Response status code: {response.status_code}. Text request: {dto.text}', exception)
+                log.failure(self.speak, f'Not possible to parse response as json. Text request: {dto.text}. Request body: {requestBody}. Response as text: {response.text}. Response status code: {response.status_code}', exception)
                 return self.speakFromCache(DEFAULT_SPEAKING_MESSAGE, muted=dto.muted)
             if ObjectHelper.isNotNone(responseBody) and 399 < response.status_code :
                 return self.speakFromCache(DEFAULT_SPEAKING_MESSAGE, muted=dto.muted)
-            log.prettyPython(self.speak, 'Static file response', responseBody, logLevel=log.DEBUG)
+            log.prettyPython(self.speak, 'Voice response', responseBody, logLevel=log.INFO)
             mp3file = urllibRequests.urlopen(responseBody['file'])
             audioPath = SpeakConverterStatic.fullAudioPathAndNameAndExtension(dto)
             self.save(audioPath, mp3file)
