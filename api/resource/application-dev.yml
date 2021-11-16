@@ -8,4 +8,4 @@ api:
 
 swagger:
     schemes: [https]
-    host: ${:DEVELOPMENT_HOST}
+    host: ${SWAGGER_HOST:localhost}

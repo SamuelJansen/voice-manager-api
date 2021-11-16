@@ -4,7 +4,7 @@ import urllib.request as urllibRequests
 from python_helper import log, ReflectionHelper
 
 from python_helper import ObjectHelper, log
-from python_framework import SimpleClient, SimpleClientMethod
+from python_framework import Client, ClientMethod
 
 import Speak
 
@@ -68,12 +68,12 @@ class SoundHandler:
         return isNotPlaying
 
 
-@SimpleClient()
+@Client()
 class SpeakClient :
 
     soundHandler = SoundHandler()
 
-    @SimpleClientMethod(requestClass=[SpeakDto.SpeakRequestDto])
+    @ClientMethod(requestClass=[SpeakDto.SpeakRequestDto])
     def speak(self, dto):
         try :
             requestBody = {
@@ -127,7 +127,7 @@ class SpeakClient :
                 extension = dto.extension
             )
 
-    @SimpleClientMethod()
+    @ClientMethod()
     def speakFromCache(self, model: Speak.Speak, muted: bool = False) :
         if not muted:
             self.play(SpeakConverterStatic.fullAudioPathAndNameAndExtension(model), model.duration, muted)
@@ -143,11 +143,11 @@ class SpeakClient :
             duration = model.duration
         )
 
-    @SimpleClientMethod()
+    @ClientMethod()
     def save(self, audioPath: str, mp3file: any):
         return self.soundHandler.store(audioPath, mp3file)
 
-    @SimpleClientMethod()
+    @ClientMethod()
     def play(self, audioPath: str, duration: str, muted: bool):
         if not muted:
             try:
@@ -159,7 +159,7 @@ class SpeakClient :
                 except Exception as innerException:
                     log.failure(self.play, f'Not possible to play default message', exception=innerException, muteStackTrace=True)
 
-    @SimpleClientMethod()
+    @ClientMethod()
     def playBuffer(self):
         results = None
         try:

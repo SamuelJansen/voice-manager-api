@@ -23,7 +23,7 @@ api:
         scheme: http
         host: 0.0.0.0
         port: 5050
-        base-url: /ai-voice-api
+        base-url: /voice-api
     scheduler:
         enable: ${ENABLE_SCHEDULER_API:True}
 
