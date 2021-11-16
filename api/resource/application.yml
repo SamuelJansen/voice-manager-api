@@ -1,6 +1,6 @@
 print-status: False
 api:
-    name: AiVoiceApi
+    name: VoiceApi
     extension: yml
     dependency:
         update: False
@@ -33,7 +33,7 @@ swagger:
     info:
         title: ${api.name}
         version: 0.0.1
-        description: Ai Voice Api
+        description: Voice Api
         terms-of-service: http://swagger.io/terms/
         contact:
             name: Samuel Jansen
