@@ -3,7 +3,7 @@ from python_framework import Scheduler, SchedulerMethod, SchedulerType
 
 from constant import SpeechConstant
 
-@Scheduler()
+@Scheduler(muteLogs=True)
 class AudioScheduler :
 
     @SchedulerMethod(SchedulerType.INTERVAL, seconds=SpeechConstant.SPEAK_CHECK_INTERVAL, instancesUpTo=2)
