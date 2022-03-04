@@ -1,2 +1,2 @@
-python-framework>=0.2.211
+python-framework>=0.3.11
 pygame==2.0.1
