@@ -26,30 +26,34 @@ DEFAULT_SPEAKING_MESSAGE = Speak.Speak(
 
 DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
-  'Accept-Encoding': None
+  'Accept-Encoding': None,
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
 }
 
 class SoundHandler:
-    def __init__(self):
+    def __init__(self, frequency=SoundUtil.DEFAULT_FREQUENCY):
         self.playing = False
+        self.frequency = frequency
         self.buffer = []
 
     def addToBuffer(self, audioPath: str, duration: float):
         self.buffer.append({
             'audioPath': audioPath,
-            'duration': duration
+            'duration': duration,
+            'frequency': self.frequency
         })
 
     def playBuffer(self):
         if 0 < len(self.buffer) and self.isNotPlaying():
             self.playing = True
             audio = self.buffer.pop(0)
-            SoundUtil.speakFromCache(audio['audioPath'], audio['duration'])
+            SoundUtil.speakFromCache(audio['audioPath'], audio['duration'], audio['frequency'])
 
-    def play(self, audioPath: str, duration: float):
+    def play(self, audioPath: str, duration: float, frequency: int):
         self.buffer.insert(0, {
             'audioPath': audioPath,
-            'duration': duration
+            'duration': duration,
+            'frequency': self.frequency
         })
 
     def store(self, audioPath: str, mp3file: any):
@@ -71,7 +75,7 @@ class SoundHandler:
 @Client()
 class SpeakClient :
 
-    soundHandler = SoundHandler()
+    soundHandler = SoundHandler(frequency=44_100)
 
     @ClientMethod(requestClass=[SpeakDto.SpeakRequestDto])
     def speak(self, dto):

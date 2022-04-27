@@ -1,6 +1,6 @@
 print-status: False
 api:
-    name: VoiceApi
+    name: VoiceManagerApi
     extension: yml
     dependency:
         update: False
@@ -23,9 +23,15 @@ api:
         scheme: http
         host: 0.0.0.0
         port: 5050
-        base-url: /voice-api
+        base-url: /voice-manager-api
     scheduler:
         enable: ${ENABLE_SCHEDULER_API:True}
+
+queue:
+    queue-manager-api:
+        voice-manager-api:
+            listener:
+                timeout: 2
 
 swagger:
     # schemes: [${api.server.scheme}] ###- bug

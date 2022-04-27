@@ -1,0 +1,14 @@
+print-status: False
+
+api:
+    server:
+        base-url: /dell-development
+        port: 5000
+    database:
+        dialect: ${DATABASE_DIALECT:sqlite}
+        settings:
+            check_same_thread: False
+
+swagger:
+    schemes: [https]
+    host: ${SWAGGER_HOST:localhost}
