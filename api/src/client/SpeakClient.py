@@ -75,7 +75,7 @@ class SoundHandler:
 @Client()
 class SpeakClient :
 
-    soundHandler = SoundHandler(frequency=44_100)
+    soundHandler = SoundHandler(frequency=SpeechClientConfig.FREQUENCY)
 
     @ClientMethod(requestClass=[SpeakDto.SpeakRequestDto])
     def speak(self, dto):

@@ -27,6 +27,10 @@ api:
     scheduler:
         enable: ${ENABLE_SCHEDULER_API:True}
 
+speech:
+    client:
+        frequency: 48000
+
 queue:
     queue-manager-api:
         voice-manager-api:
