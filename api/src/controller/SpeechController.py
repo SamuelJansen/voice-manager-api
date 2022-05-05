@@ -9,7 +9,7 @@ class SpeechController:
     @ControllerMethod(url = '/',
         requestClass = [[SpeakDto.SpeakRequestDto]],
         responseClass = [[SpeakDto.SpeakResponseDto]],
-        apiKeyRequired=[ApiKeyContext.ADMIN, ApiKeyContext.USER]
+        apiKeyRequired=[ApiKeyContext.ADMIN, ApiKeyContext.USER, ApiKeyContext.API]
         , logRequest = True
         , logResponse = True
     )

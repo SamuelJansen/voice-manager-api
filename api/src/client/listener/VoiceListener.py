@@ -18,7 +18,7 @@ class VoiceListener:
     @MessageListenerMethod(url = '/listener/speech',
         requestClass = [[SpeakDto.SpeakRequestDto]],
         responseClass = [[SpeakDto.SpeakResponseDto]],
-        apiKeyRequired=[ApiKeyContext.ADMIN, ApiKeyContext.USER],
+        apiKeyRequired=[ApiKeyContext.ADMIN, ApiKeyContext.USER, ApiKeyContext.USER],
         runInAThread = True
         # , logRequest = True
         # , logResponse = True
