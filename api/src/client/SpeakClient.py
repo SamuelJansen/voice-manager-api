@@ -4,7 +4,7 @@ import urllib.request as urllibRequests
 from python_helper import log, ReflectionHelper
 
 from python_helper import ObjectHelper, log
-from python_framework import Client, ClientMethod
+from python_framework import Client, ClientMethod, HttpStatus
 
 import Speak
 
@@ -103,7 +103,7 @@ class SpeakClient :
                 # log.prettyPython(self.speak, 'response error', ReflectionHelper.getItNaked(response), logLevel=log.DEBUG)
                 log.failure(self.speak, f'Not possible to parse response as json. Text request: {dto.text}. Request body: {requestBody}. Response as text: {response.text}. Response status code: {response.status_code}', exception)
                 return self.speakFromCache(DEFAULT_SPEAKING_MESSAGE, muted=dto.muted)
-            if ObjectHelper.isNotNone(responseBody) and 399 < response.status_code :
+            if ObjectHelper.isNotNone(responseBody) and HttpStatus.BAD_REQUEST <= response.status_code :
                 return self.speakFromCache(DEFAULT_SPEAKING_MESSAGE, muted=dto.muted)
             log.prettyPython(self.speak, 'Voice response', responseBody, logLevel=log.INFO)
             mp3file = urllibRequests.urlopen(responseBody['file'])

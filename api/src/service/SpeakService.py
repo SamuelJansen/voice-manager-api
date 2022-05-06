@@ -18,7 +18,7 @@ class SpeakService :
             speechCacheList = self.getSpeechCacheList()
             newSpeakList = []
             for dto in dtoList :
-                nameAndExtension = dto.name + '.' + dto.extension
+                nameAndExtension = f'{dto.name}{c.DOT}{dto.extension}'
                 if nameAndExtension in speechCacheList and self.repository.speak.existsByName(dto.name):
                     model = self.repository.speak.findByName(dto.name)
                     responseDtoList.append(self.speakFromCache(model, dto.muted))

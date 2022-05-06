@@ -45,4 +45,4 @@ VALID_CHARACTER_SET = {
     '9'
 }
 
-DEFAULT_VOICE_SERVICE_IS_OFFLINE_MESSAGE = 'Voice service is offline at the moment.'
+DEFAULT_VOICE_SERVICE_IS_OFFLINE_MESSAGE = 'Voice service is unavailable right now'
