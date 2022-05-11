@@ -53,6 +53,13 @@ queue-manager-api:
                 timeout: 2
             listener:
                 timeout: 2
+    voice-manager-api:
+        speak-all:
+            queue-key: ${SPEAK_ALL_QUEUE_KEY}
+            emitter:
+                timeout: 2
+            listener:
+                timeout: 2
 
 swagger:
     # schemes: [${api.server.scheme}] ###- bug

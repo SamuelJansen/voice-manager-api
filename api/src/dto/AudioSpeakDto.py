@@ -12,7 +12,7 @@ class AudioSpeakRequestDto:
         self.text = text
         self.voice = voice
         self.path = path
-        self.name = AudioSpeakConverterStatic.getValidName(name)
+        self.name = AudioSpeakConverterStatic.getDefaultValidName(self)
         self.extension = extension
         AudioSpeakConverterStatic.toRequestDto(self)
 
@@ -30,6 +30,6 @@ class AudioSpeakResponseDto:
         self.text = text
         self.voice = voice
         self.path = path
-        self.name = AudioSpeakConverterStatic.getValidName(name)
+        self.name = name
         self.extension = extension
         self.duration = duration

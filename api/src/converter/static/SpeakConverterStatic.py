@@ -14,12 +14,15 @@ def getValidName(originalName):
     if ObjectHelper.isNotNone(originalName):
         return StringHelper.join([character for character in originalName.lower() if character in SpeechConstant.VALID_CHARACTER_SET], character=c.BLANK)
 
+def getDefaultValidName(dto):
+    return getValidName(f'{dto.voice if ObjectHelper.isNotNone(dto.voice) else c.BLANK}{c.DASH}{dto.text}'.lower().replace(c.SPACE, c.BLANK))
+
 def toRequestDto(dto):
     dto.extension = ConverterStatic.getValueOrDefault(dto.extension, AudioDataConstant.DEFAULT_AUDIO_TYPE)
     dto.path = ConverterStatic.getValueOrDefault(dto.path, SpeechConfig.PLAY_HT_STATIC_FILE_PATH)
-    if ObjectHelper.isNone(dto.name) and ObjectHelper.isNotNone(dto.text):
-        dto.name = getValidName(dto.text.lower().replace(c.SPACE, c.BLANK))
     dto.voice = getVoiceOrDefault(dto.voice)
+    if ObjectHelper.isNone(dto.name) and ObjectHelper.isNotNone(dto.text):
+        dto.name = getValidName(f'{dto.voice if ObjectHelper.isNotNone(dto.voice) else c.BLANK}{c.DASH}{dto.text}'.lower().replace(c.SPACE, c.BLANK))
     return dto
 
 def getVoiceOrDefault(givenVoice: str):
