@@ -1,4 +1,5 @@
 from python_helper import Constant as c
+from python_helper import EnvironmentHelper
 from python_framework import ResourceManager, FlaskUtil, HttpStatus
 from queue_manager_api import QueueManager
 
@@ -15,7 +16,7 @@ from flask import send_file
 def getAudio(key=None):
     try:
         dto = app.api.resource.service.speak.findAudioByKey(key)
-        path = f'''{dto.path.split(f'src{c.BACK_SLASH}')[-1]}{c.BACK_SLASH}{dto.name}{c.DOT}{dto.extension}'''
+        path = f'''{dto.path.split(f'src{EnvironmentHelper.OS_SEPARATOR}')[-1]}{EnvironmentHelper.OS_SEPARATOR}{dto.name}{c.DOT}{dto.extension}'''
         return send_file(
             path,
             mimetype="audio/mp3",
