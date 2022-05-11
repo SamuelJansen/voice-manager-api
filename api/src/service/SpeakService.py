@@ -5,7 +5,7 @@ from python_framework import Service, ServiceMethod, EnumItem
 import Speak
 
 from config import SpeechConfig
-from dto import SpeakDto
+from dto import SpeakDto, AudioSpeakDto
 from converter.static import SpeakConverterStatic
 
 @Service()
@@ -32,7 +32,7 @@ class SpeakService :
         return responseDtoList
 
     @ServiceMethod(requestClass=[[SpeakDto.SpeakResponseDto]])
-    def saveAll(self, speakResponseDto):
+    def saveAll(self, speakResponseDtoList):
         return self.repository.speak.saveAll([
             Speak.Speak(
                 key = response.key,
@@ -41,10 +41,10 @@ class SpeakService :
                 path = response.path,
                 name = response.name,
                 extension = response.extension,
-                staticFileCreatedAt = response.staticFileCreatedAt,
+                duration = response.duration,
                 staticUrl = response.staticUrl,
-                duration = response.duration
-            ) for response in speakResponseDto
+                staticFileCreatedAt = response.staticFileCreatedAt
+            ) for response in speakResponseDtoList
         ])
 
     @ServiceMethod(requestClass=[Speak.Speak, bool])
@@ -72,3 +72,25 @@ class SpeakService :
     @ServiceMethod()
     def checkAndHandelAudioBuffer(self) :
         return self.client.speak.playBuffer()
+
+    @ServiceMethod(requestClass=[str])
+    def findAudioByKey(self, key):
+        return self.mapper.speak.fromModelToResponseDto(self.repository.speak.findByKey(key))
+
+    @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
+    def buildAll(self, dtoList):
+        nameList = [dto.name for dto in dtoList]
+        modelList = self.repository.speak.findAllByNameIn(nameList)
+        newAudiosDtoList = self.service.speak.speakAll([
+            SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
+                text = dto.text,
+                voice = dto.voice,
+                name = SpeakConverterStatic.getValidName(dto.text),
+                muted = True
+            )) for dto in dtoList if dto.name in nameList
+        ])
+        self.saveAll(newAudiosDtoList)
+        return self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+            *self.mapper.audioSpeak.fromModelListToResponseDtoList(modelList),
+            *newAudiosDtoList
+        ])

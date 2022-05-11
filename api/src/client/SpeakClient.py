@@ -1,10 +1,11 @@
 import json, time
 import requests
 import urllib.request as urllibRequests
+from python_helper import Constant as c
 from python_helper import log, ReflectionHelper
 
 from python_helper import ObjectHelper, log
-from python_framework import Client, ClientMethod, HttpStatus
+from python_framework import Client, ClientMethod, HttpStatus, Serializer
 
 import Speak
 
@@ -111,7 +112,7 @@ class SpeakClient :
             self.save(audioPath, mp3file)
             self.play(audioPath, responseBody.get('duration', duration), dto.muted)
             return SpeakDto.SpeakResponseDto(
-                key = responseBody.get('hash', f'has not present - {time.time()}'),
+                key = f'''{responseBody.get('hash', f'has not present - {time.time()}')}{c.DASH}{Serializer.newUuidAsString()}''',
                 text = dto.text,
                 voice = dto.voice,
                 path = dto.path,

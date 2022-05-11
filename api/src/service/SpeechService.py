@@ -1,6 +1,6 @@
 from python_framework import Service, ServiceMethod, ApiKeyManager
 
-from dto import SpeakDto, SampleSpeakDto, AiVoiceApiDto
+from dto import AudioSpeakDto, SampleSpeakDto, AiVoiceApiDto, SpeakDto
 from Voice import Voice
 
 @Service()
@@ -24,3 +24,7 @@ class SpeechService :
             'RateLimit-Remaining': model.remainingTries,
             'RateLimit-Reset': False
         }
+
+    @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
+    def buildAll(self, dtoList):
+        return self.service.speak.buildAll(dtoList)

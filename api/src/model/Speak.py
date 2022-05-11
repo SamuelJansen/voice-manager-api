@@ -16,15 +16,15 @@ class Speak(MODEL):
 
     id = sap.Column(sap.Integer(), sap.Sequence(f'{__tablename__}{sap.ID}{sap.SEQ}'), primary_key=True)
     createdAt = sap.Column(sap.DateTime)
-    key = sap.Column(sap.String(STRING_SIZE))
+    key = sap.Column(sap.String(STRING_SIZE), unique=True)
     text = sap.Column(sap.String(GIANT_STRING_SIZE))
     voice = sap.Column(sap.String(LITTLE_STRING_SIZE))
     path = sap.Column(sap.String(STRING_SIZE))
     name = sap.Column(sap.String(GIANT_STRING_SIZE))
     extension = sap.Column(sap.String(LITTLE_STRING_SIZE))
-    staticFileCreatedAt = sap.Column(sap.Integer())
-    staticUrl = sap.Column(sap.String(LARGE_STRING_SIZE))
     duration = sap.Column(sap.Float())
+    staticUrl = sap.Column(sap.String(LARGE_STRING_SIZE))
+    staticFileCreatedAt = sap.Column(sap.Integer())
 
     def __init__(self,
         id = None,
@@ -35,9 +35,9 @@ class Speak(MODEL):
         path = None,
         name = None,
         extension = None,
-        staticFileCreatedAt = None,
+        duration = None,
         staticUrl = None,
-        duration = None
+        staticFileCreatedAt = None
     ):
         self.id = id
         self.createdAt = DateTimeHelper.dateTimeNow() if ObjectHelper.isNone(createdAt) else DateTimeHelper.forcedlyGetDateTime(createdAt)
@@ -47,9 +47,9 @@ class Speak(MODEL):
         self.path = path
         self.name = name
         self.extension = extension
-        self.staticFileCreatedAt = staticFileCreatedAt
-        self.staticUrl = staticUrl
         self.duration = duration
+        self.staticUrl = staticUrl
+        self.staticFileCreatedAt = staticFileCreatedAt
 
     def __repr__(self):
         return f'{self.__tablename__}(id: {self.id}, name: {self.name})'

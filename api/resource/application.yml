@@ -43,6 +43,17 @@ queue:
             listener:
                 timeout: 2
 
+queue-manager-api:
+    base-url: ${QUEUE_MANAGER_API_URL}
+    api-key: ${QUEUE_MANAGER_API_API_KEY}
+    the-news-api:
+        persist-today-news-voice:
+            queue-key: ${PERSIST_TODAY_NEWS_VOICE_QUEUE_KEY}
+            emitter:
+                timeout: 2
+            listener:
+                timeout: 2
+
 swagger:
     # schemes: [${api.server.scheme}] ###- bug
     # host: ${SWAGGER_HOST:${api.server.host}}:${api.server.port} ###- bug

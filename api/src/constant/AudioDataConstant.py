@@ -1,0 +1,1 @@
+DEFAULT_AUDIO_TYPE = 'mp3'

@@ -80,3 +80,8 @@ class SpeakRepository:
         model = self.repository.session.query(self.model).order_by(self.model.id.desc()).first()
         self.repository.session.commit()
         return model
+
+    def findAllByNameIn(self, nameList) :
+        modelList = self.repository.session.query(self.model).filter(self.model.name.in_(nameList)).all()
+        self.repository.session.commit()
+        return modelList
