@@ -37,14 +37,8 @@ speech:
     client:
         frequency: 48000
 
-queue:
-    queue-manager-api:
-        voice-manager-api:
-            listener:
-                timeout: 2
-
 queue-manager-api:
-    base-url: ${QUEUE_MANAGER_API_URL}
+    base-url: ${QUEUE_MANAGER_API_URL}/queue-manager-api
     api-key: ${QUEUE_MANAGER_API_API_KEY}
     the-news-api:
         persist-today-news-voice:
