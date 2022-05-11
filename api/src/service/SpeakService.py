@@ -79,18 +79,19 @@ class SpeakService :
 
     @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
     def buildAll(self, dtoList):
-        nameList = [dto.name for dto in dtoList]
-        modelList = self.repository.speak.findAllByNameIn(nameList)
-        newAudiosDtoList = self.service.speak.speakAll([
-            SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
-                text = dto.text,
-                voice = dto.voice,
-                name = SpeakConverterStatic.getDefaultValidName(dto),
-                muted = True
-            )) for dto in dtoList if dto.name in nameList
-        ])
-        self.saveAll(newAudiosDtoList)
+        existingModelList = self.repository.speak.findAllByNameIn([dto.name for dto in dtoList])
         return self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
-            *self.mapper.audioSpeak.fromModelListToResponseDtoList(modelList),
-            *newAudiosDtoList
+            *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
+            *self.service.speak.speakAll([
+                SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
+                    text = dto.text,
+                    voice = dto.voice,
+                    name = SpeakConverterStatic.getDefaultValidName(dto),
+                    muted = True
+                ))
+                for dto in dtoList if dto.name not in [
+                    model.name
+                    for model in existingModelList
+                ]
+            ])
         ])
