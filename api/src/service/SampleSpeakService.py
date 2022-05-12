@@ -1,13 +1,13 @@
 from python_framework import Service, ServiceMethod, ConverterStatic, GlobalException
 
-from dto import SpeakDto, AiVoiceApiDto
+from dto import SpeakDto, ApiKeyDataDto
 import SampleSpeak
 
 
 @Service()
 class SampleSpeakService :
 
-    @ServiceMethod(requestClass=[AiVoiceApiDto.ApiKeyDataDto])
+    @ServiceMethod(requestClass=[ApiKeyDataDto.ApiKeyDataDto])
     def findOrCreate(self, currentApiKey):
         if self.notExistsByAccountKey(currentApiKey.accountKey):
             return self.create(currentApiKey)
@@ -23,7 +23,7 @@ class SampleSpeakService :
     def findByAccountKey(self, accountKey):
         return self.repository.sampleSpeak.findByAccountKey(accountKey)
 
-    @ServiceMethod(requestClass=[AiVoiceApiDto.ApiKeyDataDto])
+    @ServiceMethod(requestClass=[ApiKeyDataDto.ApiKeyDataDto])
     def create(self, currentApiKey):
         return self.repository.sampleSpeak.save(SampleSpeak.SampleSpeak(
             accountKey = currentApiKey.accountKey,

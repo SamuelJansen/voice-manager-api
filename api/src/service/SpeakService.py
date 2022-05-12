@@ -80,7 +80,7 @@ class SpeakService :
     @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
     def buildAll(self, dtoList):
         existingModelList = self.repository.speak.findAllByNameIn([dto.name for dto in dtoList])
-        return self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+        responseDtoList = self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
             *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
             *self.service.speak.speakAll([
                 SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
@@ -95,3 +95,11 @@ class SpeakService :
                 ]
             ])
         ])
+        orderedResponseDtoList = [
+            responseDto
+            for dto in dtoList
+            for responseDto in responseDtoList
+            if dto.name == responseDto.name
+        ]
+        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {dtoList}, orderedResponseDtoList: {orderedResponseDtoList}'
+        return orderedResponseDtoList

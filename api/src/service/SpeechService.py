@@ -1,6 +1,6 @@
 from python_framework import Service, ServiceMethod, ApiKeyManager
 
-from dto import AudioSpeakDto, SampleSpeakDto, AiVoiceApiDto, SpeakDto
+from dto import AudioSpeakDto, SampleSpeakDto, ApiKeyDataDto, SpeakDto
 from Voice import Voice
 
 @Service()
@@ -12,7 +12,7 @@ class SpeechService :
 
     @ServiceMethod(requestClass=[[SampleSpeakDto.SampleSpeakRequestDto]])
     def sampleSpeech(self, dtoList):
-        currentApiKey = ApiKeyManager.getContextData(dataClass=AiVoiceApiDto.ApiKeyDataDto)
+        currentApiKey = ApiKeyManager.getContextData(dataClass=ApiKeyDataDto.ApiKeyDataDto)
         model = self.service.sampleSpeak.findOrCreate(currentApiKey)
         self.validator.sampleSpeak.validateAvailableTries(model, dtoList)
         responseDtoList = self.service.speak.speakAll(
