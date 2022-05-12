@@ -1,6 +1,8 @@
+from flask import send_file
+
 from python_helper import Constant as c
-from python_helper import EnvironmentHelper
-from python_framework import ResourceManager, FlaskUtil, HttpStatus
+from python_helper import EnvironmentHelper, log
+from python_framework import ResourceManager, FlaskUtil, HttpStatus, LogConstant
 from queue_manager_api import QueueManager
 
 import ModelAssociation
@@ -10,10 +12,10 @@ app = ResourceManager.initialize(__name__, ModelAssociation.MODEL, managerList=[
     QueueManager()
 ])
 
-from flask import send_file
 
 @app.route(f'{app.api.baseUrl}/audios/<string:key>')
 def getAudio(key=None):
+    log.info(getAudio, f'{LogConstant.CONTROLLER_SPACE}{FlaskUtil.safellyGetVerb()}{c.SPACE_DASH_SPACE}{FlaskUtil.safellyGetUrl()}')
     try:
         dto = app.api.resource.service.speak.findAudioByKey(key)
         path = f'''{dto.path.split(f'src{EnvironmentHelper.OS_SEPARATOR}')[-1]}{EnvironmentHelper.OS_SEPARATOR}{dto.name}{c.DOT}{dto.extension}'''
@@ -23,5 +25,7 @@ def getAudio(key=None):
             as_attachment=False
         ), HttpStatus.OK
     except Exception as exception:
-        print(exception)
-    return {'message': 'Audio not found'}, 400
+        MESSAGE_KEY = 'message'
+        responseDto = {MESSAGE_KEY, 'Audio not found'}
+        log.error(getAudio, responseDto.get(MESSAGE_KEY), exception=exception)
+    return responseDto, 404
