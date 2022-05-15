@@ -31,6 +31,7 @@ api:
         port: 5050
         base-url: /voice-manager-api
     scheduler:
+        time-zone: ${SCHEDULER_TIMEZONE:Brazil/East}
         enable: ${ENABLE_SCHEDULER_API:True}
     listener:
         enable: ${ENABLE_LISTENER_API:True}
