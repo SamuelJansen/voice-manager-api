@@ -7,7 +7,7 @@ api:
             check_same_thread: False
 
 queue-manager-api:
-    base-url: ${QUEUE_MANAGER_API_URL}:6931/queue-manager-api
+    base-url: ${QUEUE_MANAGER_API_HOST}:6931/queue-manager-api
 
 swagger:
     schemes: [${api.server.scheme}] ###- bug

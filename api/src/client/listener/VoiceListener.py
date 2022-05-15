@@ -17,10 +17,10 @@ class VoiceListener:
 
     @MessageListenerMethod(url = '/listener/speech',
         requestClass = [[SpeakDto.SpeakRequestDto]],
-        apiKeyRequired=[ApiKeyContext.ADMIN, ApiKeyContext.USER, ApiKeyContext.API],
+        apiKeyRequired = [ApiKeyContext.ADMIN, ApiKeyContext.USER, ApiKeyContext.API],
         runInAThread = True
-        # , logRequest = True
-        # , logResponse = True
+        , logRequest = True
+        , logResponse = True
     )
     def acceptSpeakList(self, dtoList):
-        return self.service.theNews.speakAll(dtoList), HttpStatus.ACCEPTED
+        return self.service.speak.speakAll(dtoList), HttpStatus.ACCEPTED

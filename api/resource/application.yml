@@ -32,13 +32,17 @@ api:
         base-url: /voice-manager-api
     scheduler:
         enable: ${ENABLE_SCHEDULER_API:True}
+    listener:
+        enable: ${ENABLE_LISTENER_API:True}
+    emitter:
+        enable: ${ENABLE_EMITER_API:True}
 
 speech:
     client:
         frequency: 48000
 
 queue-manager-api:
-    base-url: ${QUEUE_MANAGER_API_URL}/queue-manager-api
+    base-url: ${QUEUE_MANAGER_API_HOST}/queue-manager-api
     api-key: ${QUEUE_MANAGER_API_API_KEY}
     the-news-api:
         persist-today-news-voice:
