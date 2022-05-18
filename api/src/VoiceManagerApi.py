@@ -26,6 +26,6 @@ def getAudio(key=None):
         ), HttpStatus.OK
     except Exception as exception:
         MESSAGE_KEY = 'message'
-        responseDto = {MESSAGE_KEY, 'Audio not found'}
+        responseDto = {MESSAGE_KEY: 'Audio not found'}
         log.error(getAudio, responseDto.get(MESSAGE_KEY), exception=exception)
     return responseDto, 404

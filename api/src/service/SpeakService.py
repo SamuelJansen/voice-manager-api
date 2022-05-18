@@ -2,11 +2,12 @@ from python_helper import Constant as c
 from python_helper import EnvironmentHelper, ObjectHelper, RandomHelper, StringHelper, log
 from python_framework import Service, ServiceMethod, EnumItem
 
+from config import SpeechConfig
+from enumeration.SpeakStatus import SpeakStatus
+from converter.static import SpeakConverterStatic
+from dto import SpeakDto, AudioSpeakDto
 import Speak
 
-from config import SpeechConfig
-from dto import SpeakDto, AudioSpeakDto
-from converter.static import SpeakConverterStatic
 
 @Service()
 class SpeakService :
@@ -43,7 +44,8 @@ class SpeakService :
                 extension = response.extension,
                 duration = response.duration,
                 staticUrl = response.staticUrl,
-                staticFileCreatedAt = response.staticFileCreatedAt
+                staticFileCreatedAt = response.staticFileCreatedAt,
+                status = SpeakStatus.SUCCESS
             ) for response in speakResponseDtoList
         ])
 
@@ -80,7 +82,7 @@ class SpeakService :
     @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
     def buildAll(self, dtoList):
         existingModelList = self.repository.speak.findAllByNameIn([dto.name for dto in dtoList])
-        responseDtoList = self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+        responseDtoList = set(self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
             *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
             *self.service.speak.speakAll([
                 SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
@@ -94,12 +96,12 @@ class SpeakService :
                     for model in existingModelList
                 ]
             ])
-        ])
+        ]))
         orderedResponseDtoList = [
             responseDto
             for dto in dtoList
             for responseDto in responseDtoList
             if dto.name == responseDto.name
         ]
-        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {dtoList}, orderedResponseDtoList: {orderedResponseDtoList}'
+        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, response length: {len(orderedResponseDtoList)}'
         return orderedResponseDtoList
