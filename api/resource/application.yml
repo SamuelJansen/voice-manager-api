@@ -38,6 +38,9 @@ api:
     emitter:
         enable: ${ENABLE_EMITER_API:True}
 
+the-news-api:
+    api-key: ${THE_NEWS_API_API_KEY}
+
 speech:
     client:
         frequency: 48000

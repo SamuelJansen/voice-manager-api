@@ -9,3 +9,5 @@ PERSIST_TODAY_NEWS_VOICE_EMITTER_API_KEY = globalsInstance.getSetting('queue-man
 PERSIST_TODAY_NEWS_VOICE_EMITTER_TIMEOUT = globalsInstance.getSetting('queue-manager-api.the-news-api.persist-today-news-voice.emitter.timeout')
 
 CREATE_TODAY_NEWS_VOICE_LISTENER_TIMEOUT = globalsInstance.getSetting('queue-manager-api.the-news-api.persist-today-news-voice.listener.timeout')
+
+API_KEY = globalsInstance.getSetting('the-news-api.api-key')

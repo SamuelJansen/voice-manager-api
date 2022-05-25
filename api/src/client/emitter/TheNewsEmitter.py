@@ -26,4 +26,9 @@ class TheNewsEmitter:
         , logResponse = True
     )
     def todayNews(self, dtoList):
-        return self.emit(body=dtoList)
+        return self.emit(
+            messageHeaders = {
+                JwtConstant.DEFAULT_JWT_API_KEY_HEADER_NAME: f'Bearer {TheNewsQueueConfig.API_KEY}'
+            },
+            body = dtoList
+        )
