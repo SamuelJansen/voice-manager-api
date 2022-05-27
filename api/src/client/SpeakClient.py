@@ -14,6 +14,7 @@ from util import SoundUtil
 from config import SpeechClientConfig
 from dto import SpeakDto
 from converter.static import SpeakConverterStatic
+from enumeration.SpeakStatus import SpeakStatus
 
 DEFAULT_SPEAKING_MESSAGE_DTO = SpeakDto.SpeakRequestDto(text=SpeechConstant.DEFAULT_VOICE_SERVICE_IS_OFFLINE_MESSAGE)
 DEFAULT_SPEAKING_MESSAGE = Speak.Speak(
@@ -30,6 +31,7 @@ DEFAULT_HEADERS = {
   'Accept-Encoding': None,
   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
 }
+
 
 class SoundHandler:
     def __init__(self, frequency=SoundUtil.DEFAULT_FREQUENCY):
@@ -120,7 +122,8 @@ class SpeakClient :
                 extension = dto.extension,
                 staticFileCreatedAt = responseBody.get('created_at', time.time()),
                 staticUrl = responseBody.get('file'),
-                duration = responseBody.get('duration', duration)
+                duration = responseBody.get('duration', duration),
+                status = SpeakStatus.SUCCESS
             )
         except Exception as exception :
             log.error(self.speak, f'Not possible to speak "{dto.text}" properly', exception)
@@ -129,7 +132,8 @@ class SpeakClient :
                 voice = dto.voice,
                 path = dto.path,
                 name = dto.name,
-                extension = dto.extension
+                extension = dto.extension,
+                status = SpeakStatus.ERROR
             )
 
     @ClientMethod()
@@ -145,7 +149,8 @@ class SpeakClient :
             extension = model.extension,
             staticFileCreatedAt = model.staticFileCreatedAt,
             staticUrl = model.staticUrl,
-            duration = model.duration
+            duration = model.duration,
+            status = model.status
         )
 
     @ClientMethod()

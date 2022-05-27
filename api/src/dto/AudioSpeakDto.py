@@ -24,7 +24,8 @@ class AudioSpeakResponseDto:
         path = None,
         name = None,
         extension = None,
-        duration = None
+        duration = None,
+        status = None
     ):
         self.key = key
         self.text = text
@@ -33,3 +34,4 @@ class AudioSpeakResponseDto:
         self.name = name
         self.extension = extension
         self.duration = duration
+        self.status = status

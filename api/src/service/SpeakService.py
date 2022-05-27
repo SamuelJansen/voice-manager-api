@@ -33,20 +33,20 @@ class SpeakService :
         return responseDtoList
 
     @ServiceMethod(requestClass=[[SpeakDto.SpeakResponseDto]])
-    def saveAll(self, speakResponseDtoList):
+    def saveAll(self, dtoList):
         return self.repository.speak.saveAll([
             Speak.Speak(
-                key = response.key,
-                text = response.text,
-                voice = response.voice,
-                path = response.path,
-                name = response.name,
-                extension = response.extension,
-                duration = response.duration,
-                staticUrl = response.staticUrl,
-                staticFileCreatedAt = response.staticFileCreatedAt,
-                status = SpeakStatus.SUCCESS
-            ) for response in speakResponseDtoList
+                key = dto.key,
+                text = dto.text,
+                voice = dto.voice,
+                path = dto.path,
+                name = dto.name,
+                extension = dto.extension,
+                duration = dto.duration,
+                staticUrl = dto.staticUrl,
+                staticFileCreatedAt = dto.staticFileCreatedAt,
+                status = dto.status
+            ) for dto in dtoList
         ])
 
     @ServiceMethod(requestClass=[Speak.Speak, bool])
@@ -103,5 +103,5 @@ class SpeakService :
             for responseDto in responseDtoList
             if dto.name == responseDto.name
         ]
-        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, response length: {len(orderedResponseDtoList)}'
+        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, dto length: {len(orderedResponseDtoList)}'
         return orderedResponseDtoList

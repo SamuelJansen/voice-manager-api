@@ -28,7 +28,8 @@ class SpeakResponseDto:
         extension = None,
         staticFileCreatedAt = None,
         staticUrl = None,
-        duration = None
+        duration = None,
+        status = None
     ):
         self.key = key
         self.text = text
@@ -39,3 +40,4 @@ class SpeakResponseDto:
         self.staticFileCreatedAt = staticFileCreatedAt
         self.staticUrl = staticUrl
         self.duration = duration
+        self.status = status
