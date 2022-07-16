@@ -103,5 +103,5 @@ class SpeakService :
             for responseDto in responseDtoList
             if dto.name == responseDto.name
         ]
-        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werent found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, dto length: {len(orderedResponseDtoList)}'
+        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werent found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}, responseDtoList: {[dto.name for dto in responseDtoList]}. Request length: {len(dtoList)}, ordered response length: {len(orderedResponseDtoList)}, response length: {len(responseDtoList)}'
         return orderedResponseDtoList
