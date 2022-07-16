@@ -88,7 +88,7 @@ class SpeakService :
                 SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
                     text = dto.text,
                     voice = dto.voice,
-                    name = SpeakConverterStatic.getDefaultValidName(dto),
+                    name = SpeakConverterStatic.getDefaultValidName(dto, originalName=dto.name),
                     muted = True
                 ))
                 for dto in dtoList if dto.name not in [
@@ -103,5 +103,5 @@ class SpeakService :
             for responseDto in responseDtoList
             if dto.name == responseDto.name
         ]
-        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werend found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, dto length: {len(orderedResponseDtoList)}'
+        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werent found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}. Request length: {len(dtoList)}, dto length: {len(orderedResponseDtoList)}'
         return orderedResponseDtoList

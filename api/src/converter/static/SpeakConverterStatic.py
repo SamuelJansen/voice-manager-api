@@ -5,6 +5,9 @@ from python_framework import ConverterStatic
 from config import SpeechConfig
 from constant import SpeechConstant, AudioDataConstant
 
+def getNamePrefix(dto):
+    return f'{c.BLANK if ObjectHelper.isNone(dto.voice) else dto.voice}{c.DASH}'.lower().replace(c.SPACE, c.BLANK)
+
 def fullAudioPathAndNameAndExtension(audioData):
     path = f'{audioData.path}' if ObjectHelper.isNotNone(audioData.path) and StringHelper.isNotBlank(audioData.path) else c.BLANK
     osSeparator = f'{EnvironmentHelper.OS_SEPARATOR}' if StringHelper.isNotBlank(path) else c.BLANK
@@ -12,10 +15,15 @@ def fullAudioPathAndNameAndExtension(audioData):
 
 def getValidName(originalName):
     if ObjectHelper.isNotNone(originalName):
-        return StringHelper.join([character for character in originalName.lower() if character in SpeechConstant.VALID_CHARACTER_SET], character=c.BLANK)
+        return StringHelper.join([character for character in originalName.lower() if character in SpeechConstant.VALID_CHARACTER_SET], character=c.BLANK).lower().replace(c.SPACE, c.BLANK)
+    return c.BLANK
 
-def getDefaultValidName(dto):
-    return getValidName(f'{dto.voice if ObjectHelper.isNotNone(dto.voice) else c.BLANK}{c.DASH}{dto.text}'.lower().replace(c.SPACE, c.BLANK))
+def getDefaultValidName(dto, originalName=None):
+    namePrefix = getNamePrefix(dto)
+    originalName = getValidName(originalName)
+    if StringHelper.isNotBlank(originalName):
+        return originalName if originalName.startswith(namePrefix) else f'{namePrefix}{originalName}'
+    return f'{namePrefix}{dto.text}'
 
 def toRequestDto(dto):
     dto.extension = ConverterStatic.getValueOrDefault(dto.extension, AudioDataConstant.DEFAULT_AUDIO_TYPE)

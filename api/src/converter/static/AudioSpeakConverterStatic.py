@@ -7,8 +7,8 @@ def fullAudioPathAndNameAndExtension(audioData) :
 def getValidName(originalName):
     return SpeakConverterStatic.getValidName(originalName)
 
-def getDefaultValidName(dto):
-    return SpeakConverterStatic.getDefaultValidName(dto)
+def getDefaultValidName(dto, originalName=None):
+    return SpeakConverterStatic.getDefaultValidName(dto, originalName=originalName)
 
 def toRequestDto(dto) :
     return SpeakConverterStatic.toRequestDto(dto)
