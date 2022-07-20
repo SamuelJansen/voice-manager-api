@@ -28,4 +28,4 @@ def getAudio(key=None):
         MESSAGE_KEY = 'message'
         responseDto = {MESSAGE_KEY: 'Audio not found'}
         log.error(getAudio, responseDto.get(MESSAGE_KEY), exception=exception)
-    return responseDto, 404
+    return responseDto, 404 
