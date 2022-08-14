@@ -15,7 +15,7 @@ def toLowerCaseWithoutSpaces(text):
         return text.lower().replace(c.SPACE, c.BLANK)
 
 def getNamePrefix(dto):
-    return getValidName(f'{c.BLANK if ObjectHelper.isNone(dto.voice) else dto.voice}{c.DASH}')
+    return getValidName(f'{c.BLANK if ObjectHelper.isNone(dto.voice) else dto.voice}')
 
 def fullAudioPathAndNameAndExtension(audioData):
     path = f'{audioData.path}' if ObjectHelper.isNotNone(audioData.path) and StringHelper.isNotBlank(audioData.path) else c.BLANK
@@ -29,17 +29,22 @@ def getValidName(originalName):
 
 def getDefaultValidName(dto, originalName=None):
     namePrefix = getNamePrefix(dto)
-    originalName = getValidName(originalName)
-    if ObjectHelper.isNeitherNoneNorBlank(originalName):
-        return originalName if originalName.startswith(namePrefix) else f'{namePrefix}{originalName}'
+    dto.name = getValidName(dto.name)
+    if ObjectHelper.isNeitherNoneNorBlank(dto.name):
+        return dto.name if dto.name.startswith(namePrefix) else f'{namePrefix}{dto.name}'
     return f'{namePrefix}{getValidName(dto.text)}'
 
 def toRequestDto(dto):
+    return enrichAndReturnIt(dto)
+
+def toResponseDto(dto):
+    return enrichAndReturnIt(dto)
+
+def enrichAndReturnIt(dto):
     dto.extension = ConverterStatic.getValueOrDefault(dto.extension, AudioDataConstant.DEFAULT_AUDIO_TYPE)
     dto.path = ConverterStatic.getValueOrDefault(dto.path, SpeechConfig.PLAY_HT_STATIC_FILE_PATH)
     dto.voice = getVoiceOrDefault(dto.voice)
-    if ObjectHelper.isNone(dto.name) and ObjectHelper.isNotNone(dto.text):
-        dto.name = getDefaultValidName(dto)
+    dto.name = getDefaultValidName(dto, originalName=dto.name)
     return dto
 
 def getVoiceOrDefault(givenVoice: str):

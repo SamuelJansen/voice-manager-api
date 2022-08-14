@@ -88,7 +88,7 @@ class SpeakService :
                 SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
                     text = dto.text,
                     voice = dto.voice,
-                    name = SpeakConverterStatic.getDefaultValidName(dto, originalName=dto.name),
+                    name = dto.name,
                     muted = True
                 ))
                 for dto in dtoList if dto.name not in [

@@ -10,8 +10,11 @@ def getValidName(originalName):
 def getDefaultValidName(dto, originalName=None):
     return SpeakConverterStatic.getDefaultValidName(dto, originalName=originalName)
 
-def toRequestDto(dto) :
+def toRequestDto(dto):
     return SpeakConverterStatic.toRequestDto(dto)
+
+def toResponseDto(dto):
+    return SpeakConverterStatic.toResponseDto(dto)
 
 def getVoiceOrDefault(givenVoice: str):
     return SpeakConverterStatic.getVoiceOrDefault(givenVoice)

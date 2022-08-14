@@ -13,7 +13,7 @@ class SpeakRequestDto:
         self.text = text
         self.voice = voice
         self.path = path
-        self.name = SpeakConverterStatic.getDefaultValidName(self, originalName=name)
+        self.name = name
         self.extension = extension
         self.muted = muted if ObjectHelper.isNotNone(muted) else False
         SpeakConverterStatic.toRequestDto(self)
@@ -35,7 +35,7 @@ class SpeakResponseDto:
         self.text = text
         self.voice = voice
         self.path = path
-        self.name = SpeakConverterStatic.getDefaultValidName(self, originalName=name)
+        self.name = name
         self.extension = extension
         self.staticFileCreatedAt = staticFileCreatedAt
         self.staticUrl = staticUrl
