@@ -7,6 +7,7 @@ from globals import getGlobalsInstance
 globalsInstance = getGlobalsInstance()
 
 
+PLAY_HT_AUTHORITY = EnvironmentHelper.get(SpeechConstant.KEY_PLAY_HT_AUTHORITY)
 PLAY_HT_USER_ID = EnvironmentHelper.get(SpeechConstant.KEY_PLAY_HT_USER_ID)
 PLAY_HT_BASE_URL = EnvironmentHelper.get(SpeechConstant.KEY_PLAY_HT_BASE_URL)
 FREQUENCY = globalsInstance.getSetting('speech.client.frequency')

@@ -4,6 +4,7 @@ from Voice import Voice
 from enumeration.SpeakStatus import SpeakStatus
 
 
+KEY_PLAY_HT_AUTHORITY = 'PLAY_HT_AUTHORITY'
 KEY_PLAY_HT_USER_ID = 'PLAY_HT_USER_ID'
 KEY_PLAY_HT_BASE_URL = 'PLAY_HT_BASE_URL'
 

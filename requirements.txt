@@ -1,3 +1,3 @@
-python-framework<1.0.0,>=0.3.91
+python-framework<1.0.0,>=0.3.95
 queue-manager-api<1.0.0,>=0.1.34
-pygame==2.0.1
+pygame<3.0.0,>=2.0.1

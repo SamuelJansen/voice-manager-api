@@ -29,7 +29,10 @@ DEFAULT_SPEAKING_MESSAGE = Speak.Speak(
 DEFAULT_HEADERS = {
   'Content-Type': 'application/json',
   'Accept-Encoding': None,
-  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
+  'origin': f'https://{SpeechClientConfig.PLAY_HT_AUTHORITY}',
+  'authority': f'{SpeechClientConfig.PLAY_HT_AUTHORITY}',
+  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+  'sec-ch-ua-mobile': '?0'
 }
 
 
