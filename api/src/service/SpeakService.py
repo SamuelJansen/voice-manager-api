@@ -24,9 +24,10 @@ class SpeakService:
                     model = self.repository.speak.findByName(dto.name)
                     responseDtoList.append(self.speakFromCache(model, dto.muted))
                 else:
-                    responseDtoList.append(self.client.speak.speak(dto))
-                    if SpeakStatus.SUCCESS == dto.status:
-                        newSpeakList.append(responseDtoList[-1])
+                    responseDto = self.client.speak.speak(dto)
+                    responseDtoList.append(responseDto)
+                    if SpeakStatus.SUCCESS == responseDto.status:
+                        newSpeakList.append(responseDto)
             self.saveAll(newSpeakList)
         except Exception as exception:
             log.failure(self.speakAll, 'Not possible to speak properly', exception, muteStackTrace=True)
