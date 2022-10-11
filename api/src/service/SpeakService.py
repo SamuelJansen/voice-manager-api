@@ -10,24 +10,25 @@ import Speak
 
 
 @Service()
-class SpeakService :
+class SpeakService:
 
     @ServiceMethod(requestClass=[[SpeakDto.SpeakRequestDto]])
-    def speakAll(self, dtoList) :
+    def speakAll(self, dtoList):
         responseDtoList = []
-        try :
+        try:
             speechCacheList = self.getSpeechCacheList()
             newSpeakList = []
-            for dto in dtoList :
+            for dto in dtoList:
                 nameAndExtension = f'{dto.name}{c.DOT}{dto.extension}'
                 if nameAndExtension in speechCacheList and self.repository.speak.existsByName(dto.name):
                     model = self.repository.speak.findByName(dto.name)
                     responseDtoList.append(self.speakFromCache(model, dto.muted))
-                else :
+                else:
                     responseDtoList.append(self.client.speak.speak(dto))
-                    newSpeakList.append(responseDtoList[-1])
+                    if SpeakStatus.SUCCESS == dto.status:
+                        newSpeakList.append(responseDtoList[-1])
             self.saveAll(newSpeakList)
-        except Exception as exception :
+        except Exception as exception:
             log.failure(self.speakAll, 'Not possible to speak properly', exception, muteStackTrace=True)
             raise exception
         return responseDtoList
@@ -50,29 +51,29 @@ class SpeakService :
         ])
 
     @ServiceMethod(requestClass=[Speak.Speak, bool])
-    def speakFromCache(self, model, muted) :
+    def speakFromCache(self, model, muted):
         return self.client.speak.speakFromCache(model, muted=muted)
 
     @ServiceMethod()
-    def getSpeechCacheList(self) :
+    def getSpeechCacheList(self):
         return EnvironmentHelper.listDirectoryContent(
             SpeechConfig.PLAY_HT_STATIC_FILE_PATH
         )
 
     @ServiceMethod(requestClass=[str])
-    def simpleSpeak(self, text) :
+    def simpleSpeak(self, text):
         return self.speakAll([SpeakDto.SpeakRequestDto(text=text)])
 
     @ServiceMethod(requestClass=[str])
-    def getConstantNameAsSpeech(self, enumName) :
+    def getConstantNameAsSpeech(self, enumName):
         return StringHelper.join(self.getConstantNameAsSpeechList(enumName), character=c.SPACE)
 
     @ServiceMethod(requestClass=[str])
-    def getConstantNameAsSpeechList(self, enumName) :
+    def getConstantNameAsSpeechList(self, enumName):
         return [] if ObjectHelper.isNone(enumName) else enumName.lower().split(c.UNDERSCORE)
 
     @ServiceMethod()
-    def checkAndHandelAudioBuffer(self) :
+    def checkAndHandelAudioBuffer(self):
         return self.client.speak.playBuffer()
 
     @ServiceMethod(requestClass=[str])
