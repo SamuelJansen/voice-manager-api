@@ -52,16 +52,16 @@ queue-manager-api:
         persist-today-news-voice:
             queue-key: ${PERSIST_TODAY_NEWS_VOICE_QUEUE_KEY}
             emitter:
-                timeout: 2
+                timeout: (2,1)
             listener:
-                timeout: 2
+                timeout: (2,1)
     voice-manager-api:
         speak-all:
             queue-key: ${SPEAK_ALL_QUEUE_KEY}
             emitter:
-                timeout: 2
+                timeout: (2,1)
             listener:
-                timeout: 2
+                timeout: (2,1)
 
 swagger:
     # schemes: [${api.server.scheme}] ###- bug
