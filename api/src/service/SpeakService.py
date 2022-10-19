@@ -26,7 +26,7 @@ class SpeakService:
                 else:
                     responseDto = self.client.speak.speak(dto)
                     responseDtoList.append(responseDto)
-                    if SpeakStatus.SUCCESS == responseDto.status:
+                    if SpeakStatus.SUCCESS == responseDto.status and not self.repository.speak.existsByName(responseDto.name):
                         newSpeakList.append(responseDto)
             self.saveAll(newSpeakList)
         except Exception as exception:
@@ -84,9 +84,9 @@ class SpeakService:
     @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
     def buildAll(self, dtoList):
         existingModelList = self.repository.speak.findAllByNameIn([dto.name for dto in dtoList])
-        responseDtoList = set(self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
-            *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
-            *self.service.speak.speakAll([
+        newResponseDtoList = [
+            dto
+            for dto in self.service.speak.speakAll([
                 SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
                     text = dto.text,
                     voice = dto.voice,
@@ -98,6 +98,10 @@ class SpeakService:
                     for model in existingModelList
                 ]
             ])
+        ]
+        responseDtoList = set(self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+            *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
+            *newResponseDtoList
         ]))
         orderedResponseDtoList = [
             responseDto
