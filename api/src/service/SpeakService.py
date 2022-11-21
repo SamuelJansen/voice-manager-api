@@ -84,30 +84,43 @@ class SpeakService:
     @ServiceMethod(requestClass=[[AudioSpeakDto.AudioSpeakRequestDto]])
     def buildAll(self, dtoList):
         existingModelList = self.repository.speak.findAllByNameIn([dto.name for dto in dtoList])
-        newResponseDtoList = [
-            dto
-            for dto in self.service.speak.speakAll([
-                SpeakConverterStatic.toRequestDto(SpeakDto.SpeakRequestDto(
-                    text = dto.text,
-                    voice = dto.voice,
-                    name = dto.name,
-                    muted = True
-                ))
-                for dto in dtoList if dto.name not in [
-                    model.name
-                    for model in existingModelList
+        existingNameList = [
+            model.name
+            for model in existingModelList
+        ]
+        newRequestDtoList = []
+        for dto in dtoList:
+            if dto.name not in [
+                *existingNameList,
+                *[
+                    newRequestDto.name
+                    for newRequestDto in newRequestDtoList
+                ]
+            ]:
+                newRequestDtoList.append(
+                    SpeakConverterStatic.toRequestDto(
+                        SpeakDto.SpeakRequestDto(
+                            text = dto.text,
+                            voice = dto.voice,
+                            name = dto.name,
+                            muted = True
+                        )
+                    )
+                )
+        responseDtoSet = [
+            self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+                *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
+                *[
+                    dto
+                    for dto in self.service.speak.speakAll(newRequestDtoList)
                 ]
             ])
         ]
-        responseDtoList = set(self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
-            *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
-            *newResponseDtoList
-        ]))
-        orderedResponseDtoList = [
+        responseDtoList = [
             responseDto
             for dto in dtoList
-            for responseDto in responseDtoList
+            for responseDto in responseDtoSet
             if dto.name == responseDto.name
         ]
-        assert len(dtoList) == len(orderedResponseDtoList), f'Some audio datas werent found. dtoList: {[dto.name for dto in dtoList]}, orderedResponseDtoList: {[dto.name for dto in orderedResponseDtoList]}, responseDtoList: {[dto.name for dto in responseDtoList]}. Request length: {len(dtoList)}, ordered response length: {len(orderedResponseDtoList)}, response length: {len(responseDtoList)}'
-        return orderedResponseDtoList
+        assert len(dtoList) == len(responseDtoList), f'Inconsistent result. dtoList: {[dto.name for dto in dtoList]}, responseDtoList: {[dto.name for dto in responseDtoList]}, responseDtoSet: {[dto.name for dto in responseDtoSet]}. Request length: {len(dtoList)}, response length: {len(responseDtoList)}, response set length: {len(responseDtoSet)}'
+        return responseDtoList
