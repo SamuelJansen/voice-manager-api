@@ -107,15 +107,13 @@ class SpeakService:
                         )
                     )
                 )
-        responseDtoSet = [
-            self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
-                *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
-                *[
-                    dto
-                    for dto in self.service.speak.speakAll(newRequestDtoList)
-                ]
-            ])
-        ]
+        responseDtoSet = self.mapper.audioSpeak.fromSpeakResponseDtoListToResponseDtoList([
+            *self.mapper.audioSpeak.fromModelListToResponseDtoList(existingModelList),
+            *[
+                dto
+                for dto in self.service.speak.speakAll(newRequestDtoList)
+            ]
+        ])
         responseDtoList = [
             responseDto
             for dto in dtoList
